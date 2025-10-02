@@ -41,7 +41,7 @@ router.get('/board/:tenantId/:stageId', async (req, res) => {
     res.json(leads);
   } catch (error) {
     console.error('Error fetching board leads:', error);
-    res.status(500).json({ error: 'Failed to fetch leads' });
+    res.status(500).json({ error: error});
   }
 });
 
