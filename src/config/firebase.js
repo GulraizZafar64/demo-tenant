@@ -1,19 +1,10 @@
 const admin = require('firebase-admin');
-const path = require('path');
-const fs = require('fs');
 require('dotenv').config();
 
 let credential;
 
-// Try to load from JSON file first (recommended method)
-const serviceAccountPath = path.join(__dirname, '../../serviceAccountKey.json');
-if (fs.existsSync(serviceAccountPath)) {
-  console.log('📄 Using serviceAccountKey.json for authentication');
-  const serviceAccount = require(serviceAccountPath);
-  credential = admin.credential.cert(serviceAccount);
-} 
-// Fall back to environment variables
-else if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL) {
+// Use environment variables for authentication
+if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL) {
   console.log('🔐 Using environment variables for authentication');
   credential = admin.credential.cert({
     projectId: process.env.FIREBASE_PROJECT_ID,
@@ -24,10 +15,14 @@ else if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_PRIVATE_KEY && 
 // No valid credentials found
 else {
   console.error('❌ No Firebase credentials found!');
-  console.error('Please either:');
-  console.error('1. Place serviceAccountKey.json in project root, OR');
-  console.error('2. Set FIREBASE_PROJECT_ID, FIREBASE_PRIVATE_KEY, and FIREBASE_CLIENT_EMAIL in .env');
-  console.error('\nSee SETUP_GUIDE.md for detailed instructions.');
+  console.error('Please set the following environment variables in your .env file:');
+  console.error('- FIREBASE_PROJECT_ID');
+  console.error('- FIREBASE_PRIVATE_KEY');
+  console.error('- FIREBASE_CLIENT_EMAIL');
+  console.error('\nTo get these values:');
+  console.error('1. Go to Firebase Console > Project Settings > Service Accounts');
+  console.error('2. Click "Generate new private key"');
+  console.error('3. Extract the values from the downloaded JSON file');
   process.exit(1);
 }
 
