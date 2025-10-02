@@ -1,0 +1,27 @@
+{
+  "name": "firestore-multi-tenant-crm",
+  "version": "1.0.0",
+  "description": "Multi-tenant CRM with Firestore",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "seed": "nodemon src/seed.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [
+    "firestore",
+    "multi-tenant",
+    "crm"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "firebase-admin": "^12.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
